@@ -3,6 +3,7 @@ package http
 import (
 	// golang package
 	"go-otg/internal/app/http/server"
+	"net/http"
 
 	// external package
 	"github.com/gin-gonic/gin"
@@ -25,4 +26,5 @@ func NewHTTPServer(handlers *server.Handlers) *httpServer {
 // RegisterHandler register handler by given r pointer of gin.Engine.
 func (server *httpServer) RegisterHandler(r *gin.Engine) {
 	r.GET("/health-check", server.handlers.Common.HandleGetCommonMessage)
+	r.GET("/test", func(ctx *gin.Context) { ctx.JSON(http.StatusAccepted, gin.H{"message": "aowkwoak"}) })
 }

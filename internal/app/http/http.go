@@ -6,11 +6,13 @@ import (
 	"go-otg/internal/app/http/server"
 	"go-otg/internal/repository/db"
 	"go-otg/internal/server/http"
+	"go-otg/internal/utils"
 
 	// external package
 	"github.com/gin-gonic/gin"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
+	"github.com/spf13/viper"
 )
 
 // NewApplication new application.
@@ -20,6 +22,7 @@ func NewApplication() {
 		fmt.Println("EMPTY DB CONNECTION STRING")
 		// log.Fatal(err)
 	}
+	utils.StartENV()
 
 	repositoryDB := db.New(sqlDB)
 	resources := server.NewResources(repositoryDB)
@@ -30,5 +33,5 @@ func NewApplication() {
 
 	app := gin.Default()
 	httpServer.RegisterHandler(app)
-	app.Run()
+	app.Run(viper.GetString("PORT"))
 }
