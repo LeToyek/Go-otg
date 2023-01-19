@@ -1,8 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"go-otg/internal/app/http"
+)
 
 // main function
 func main() {
-	fmt.Println("Halo gan")
+	if 1+1 == 2 {
+		http.NewApplication()
+	}
 }
