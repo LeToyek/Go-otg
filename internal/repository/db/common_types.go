@@ -1,5 +1,6 @@
 package db
 
 type Common struct {
-	Message string
+	ID      int64  `db:"id"`
+	Message string `db:"message"`
 }

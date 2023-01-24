@@ -6,6 +6,7 @@ package db
 // Otherwise, empty Common, and error will be returned.
 func (repository *Repository) GetCommonByID(id int64) (Common, error) {
 	return Common{
+		ID:      1,
 		Message: "Halo gan!",
 	}, nil
 }
