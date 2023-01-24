@@ -73,3 +73,81 @@ func TestRepository_GetUserByID(t *testing.T) {
 		})
 	}
 }
+
+func TestRepository_CreateUser(t *testing.T) {
+	type mockFields struct {
+		sqlMock sqlmock.Sqlmock
+	}
+	tests := []struct {
+		name    string
+		args    User
+		want    string
+		errWant error
+		mock    func(mock mockFields)
+	}{
+		{name: "success create an user",
+			args: User{
+				ID:       "user1",
+				Username: "username1",
+				Email:    "user@gmail.com",
+				Password: "user123",
+				Address:  "jl.Gayam",
+				Age: sql.NullInt16{
+					Int16: 13,
+					Valid: true,
+				},
+			},
+			want:    "1",
+			errWant: nil,
+			mock: func(mock mockFields) {
+				mock.sqlMock.
+					ExpectExec(`INSERT INTO user("id","username","email","password","address","age") 
+					VALUES ($1,$2,$3,$4,$5,$6)`).
+					WithArgs("user1", "username1", "user@gmail.com", "user123", "jl.Gayam", 13).
+					WillReturnResult(sqlmock.NewResult(1, 1))
+			},
+		},
+		{
+			name: "failed to create an user",
+			args: User{
+				ID:       "user2",
+				Username: "username1",
+				Email:    "user@gmail.com",
+				Password: "user123",
+				Address:  "jl.Gayam",
+				Age: sql.NullInt16{
+					Int16: 13,
+					Valid: true,
+				},
+			},
+			want:    "1",
+			errWant: nil,
+			mock: func(mock mockFields) {
+				mock.sqlMock.
+					ExpectExec(`INSERT INTO user("id","username","email","password","address","age") 
+					VALUES ($1,$2,$3,$4,$5,$6)`).
+					WithArgs("user2", "username1", "user@gmail.com", "user123", "jl.Gayam", 13).
+					WillReturnResult(sqlmock.NewResult(1, 1))
+			},
+		},
+	}
+	for _, test := range tests {
+		mockDB, mockSQL, err := sqlmock.New(sqlmock.QueryMatcherOption(sqlmock.QueryMatcherEqual))
+		assert.NoError(t, err)
+		defer mockDB.Close()
+
+		mockField := mockFields{
+			sqlMock: mockSQL,
+		}
+
+		test.mock(mockField)
+		repository := &Repository{
+			db: sqlx.NewDb(mockDB, "pq"),
+		}
+
+		got, err := repository.CreateUser(context.Background(), test.args)
+
+		assert.Equal(t, test.want, got)
+		assert.Equal(t, test.errWant, err)
+	}
+}
