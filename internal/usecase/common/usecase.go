@@ -1,13 +1,16 @@
 package common
 
-import "go-otg/internal/service/common"
+import (
+	"context"
+	"go-otg/internal/service/common"
+)
 
 type commonServiceProvider interface {
 	// GetCommonByID get common by id by given id.
 	//
 	// It returns common.Common, and nil error when successful.
 	// Otherwise, empty common.Common, and error will be returned.
-	GetCommonByID(id int64) (common.Common, error)
+	GetCommonByID(ctx context.Context, id int64) (common.Common, error)
 }
 
 type Usecase struct {

@@ -1,4 +1,4 @@
-package entity
+package redis
 
 type Common struct {
 	ID      int64

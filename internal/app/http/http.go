@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"go-otg/internal/app/http/server"
 	"go-otg/internal/repository/db"
+	"go-otg/internal/repository/redis"
 	"go-otg/internal/server/http"
 	"go-otg/internal/utils"
 
@@ -23,9 +24,11 @@ func NewApplication() {
 		// log.Fatal(err)
 	}
 	utils.StartENV()
+	client := redis.NewRedisClient(viper.GetString("REDIS_HOST"), viper.GetString("REDIS_PASSWORD"))
 
+	repositoryRedis := redis.NewRedis(client)
 	repositoryDB := db.New(sqlDB)
-	resources := server.NewResources(repositoryDB)
+	resources := server.NewResources(repositoryDB, repositoryRedis)
 	services := server.NewServices(resources)
 	usecases := server.NewUsecases(services)
 	handlers := server.NewHandlers(usecases)

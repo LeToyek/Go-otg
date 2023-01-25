@@ -1,6 +1,9 @@
 package common
 
-import "go-otg/internal/entity"
+import (
+	"context"
+	"go-otg/internal/entity"
+)
 
 type resourceProvider interface {
 	// GetCommonByIDFromDB get common by id from db by given id.
@@ -8,6 +11,7 @@ type resourceProvider interface {
 	// It returns entity.Common, and nil error when successful.
 	// Otherwise, empty entity.Common, and error will be returned.
 	GetCommonByIDFromDB(id int64) (entity.Common, error)
+	GetCommonByIDFromRedis(ctx context.Context, id int64) (entity.Common, error)
 }
 
 type Service struct {

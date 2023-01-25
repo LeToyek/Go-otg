@@ -1,6 +1,10 @@
 package common
 
-import "go-otg/internal/repository/db"
+import (
+	"context"
+	"go-otg/internal/repository/db"
+	"go-otg/internal/repository/redis"
+)
 
 type dbRepoProvider interface {
 	// GetCommonByID get common by id by given id.
@@ -10,7 +14,7 @@ type dbRepoProvider interface {
 	GetCommonByID(id int64) (db.Common, error)
 }
 type redisRepoProvider interface {
-	GetUserByID()
+	GetCommonByID(ctx context.Context, id int64) (redis.Common, error)
 }
 
 type Resource struct {
