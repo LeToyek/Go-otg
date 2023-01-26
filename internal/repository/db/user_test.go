@@ -17,24 +17,24 @@ func TestRepository_GetUserByID(t *testing.T) {
 
 	tests := []struct {
 		name string
-		args int64
+		args string
 		err  error
 		want User
 		mock func(mock mockFields)
 	}{
 		{
 			name: "case error getting user from DB, should return the error",
-			args: 1,
+			args: "1",
 			err:  assert.AnError,
 			mock: func(mock mockFields) {
 				mock.sql.ExpectQuery("select * from users where id = $1").
-					WithArgs(1).
+					WithArgs("1").
 					WillReturnError(assert.AnError)
 			},
 		},
 		{
 			name: "case success then return the result",
-			args: 1,
+			args: "1",
 			want: User{
 				ID:       "1",
 				Username: "username",
@@ -46,7 +46,7 @@ func TestRepository_GetUserByID(t *testing.T) {
 			},
 			mock: func(mock mockFields) {
 				mock.sql.ExpectQuery("select * from users where id = $1").
-					WithArgs(1).
+					WithArgs("1").
 					WillReturnRows(sqlmock.NewRows([]string{"id", "username", "email", "age"}).
 						AddRow("1", "username", "email", 20))
 			},
@@ -120,14 +120,14 @@ func TestRepository_CreateUser(t *testing.T) {
 					Valid: true,
 				},
 			},
-			want:    "1",
-			errWant: nil,
+			want:    "",
+			errWant: assert.AnError,
 			mock: func(mock mockFields) {
 				mock.sqlMock.
 					ExpectExec(`INSERT INTO user("id","username","email","password","address","age") 
 					VALUES ($1,$2,$3,$4,$5,$6)`).
 					WithArgs("user2", "username1", "user@gmail.com", "user123", "jl.Gayam", 13).
-					WillReturnResult(sqlmock.NewResult(1, 1))
+					WillReturnError(assert.AnError)
 			},
 		},
 	}

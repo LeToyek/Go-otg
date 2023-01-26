@@ -1,9 +1,13 @@
 package server
 
-import "go-otg/internal/service/common"
+import (
+	"go-otg/internal/service/common"
+	"go-otg/internal/service/user"
+)
 
 type Services struct {
 	Common *common.Service
+	User   *user.Service
 }
 
 // NewServices new services by given resources pointer of Resources.
@@ -13,5 +17,6 @@ type Services struct {
 func NewServices(resources *Resources) *Services {
 	return &Services{
 		Common: common.NewService(resources.Common),
+		User:   user.NewService(resources.User),
 	}
 }

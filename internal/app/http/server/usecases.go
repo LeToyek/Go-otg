@@ -1,9 +1,13 @@
 package server
 
-import "go-otg/internal/usecase/common"
+import (
+	"go-otg/internal/usecase/common"
+	"go-otg/internal/usecase/user"
+)
 
 type Usecases struct {
 	Common *common.Usecase
+	User   *user.Usecase
 }
 
 // NewUsecases new usecases by given services pointer of Services.
@@ -13,5 +17,6 @@ type Usecases struct {
 func NewUsecases(services *Services) *Usecases {
 	return &Usecases{
 		Common: common.New(services.Common),
+		User:   user.New(services.User),
 	}
 }

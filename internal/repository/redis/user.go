@@ -2,6 +2,7 @@ package redis
 
 import (
 	"context"
+	"database/sql"
 	"encoding/json"
 	"time"
 )
@@ -12,13 +13,28 @@ func (r *Repository) SetSingleUser(user User) {
 		panic(err)
 	}
 	ttl := time.Duration(4) * time.Second
-	r.redis.Set(context.Background(), user.ID, json, ttl)
+	res := r.redis.Set(context.Background(), user.ID, json, ttl)
+	if res.Err() != nil {
+		panic(err.Error())
+	}
 }
 
-func (r *Repository) GetUserByID(userID string) (User, error) {
-	res, err := r.redis.Get(context.Background(), userID).Result()
+func (r *Repository) GetUserByID(ctx context.Context, ID string) (User, error) {
+
+	r.SetSingleUser(User{
+		ID:       "tyq1",
+		Username: "toyeqq",
+		Email:    "toyeq@gmail.com",
+		Password: "toyeqcleancode",
+		Address:  "Jalan Cendana 13",
+		Age: sql.NullInt16{
+			Int16: 12,
+			Valid: true,
+		},
+	})
+	res, err := r.redis.Get(ctx, ID).Result()
 	if err != nil {
-		panic(err)
+		return User{}, err
 	}
 
 	var user User
