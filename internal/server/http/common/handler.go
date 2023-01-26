@@ -1,11 +1,13 @@
 package common
 
+import "golang.org/x/net/context"
+
 type commonUCManager interface {
 	// GetCommonMessageByID get common message by id by given id.
 	//
 	// It returns string, and nil error when successful.
 	// Otherwise, empty string, and error will be returned.
-	GetCommonMessageByID(id int64) (string, error)
+	GetCommonMessageByID(ctx context.Context, id int64) (string, error)
 }
 
 type Handler struct {
