@@ -20,7 +20,6 @@ func (r *Repository) SetSingleUser(user User) {
 }
 
 func (r *Repository) GetUserByID(ctx context.Context, ID string) (User, error) {
-
 	r.SetSingleUser(User{
 		ID:       "tyq1",
 		Username: "toyeqq",
