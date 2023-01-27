@@ -9,6 +9,6 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -v -o go-otg cmd/*.go
+RUN go build -o go-otg cmd/*.go
 
 CMD [ "./go-otg" ]
