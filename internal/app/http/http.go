@@ -7,7 +7,6 @@ import (
 	"go-otg/internal/repository/db"
 	"go-otg/internal/repository/redis"
 	"go-otg/internal/server/http"
-	"go-otg/internal/utils"
 
 	// external package
 	"github.com/gin-gonic/gin"
@@ -23,7 +22,7 @@ func NewApplication() {
 		fmt.Println("EMPTY DB CONNECTION STRING")
 		// log.Fatal(err)
 	}
-	utils.StartENV()
+
 	client := redis.NewRedisClient(viper.GetString("REDIS_HOST"), viper.GetString("REDIS_PASSWORD"))
 
 	repositoryRedis := redis.NewRedis(client)
