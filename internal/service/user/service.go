@@ -9,6 +9,7 @@ import (
 type resourceProvider interface {
 	GetUserByIDFromDB(ctx context.Context, ID string) (db.User, error)
 	GetUserByIDFromRedis(ctx context.Context, ID string) (entity.User, error)
+	SetUserFromRedis(ctx context.Context, user User) error
 }
 
 type Service struct {

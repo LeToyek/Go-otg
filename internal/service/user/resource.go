@@ -11,6 +11,7 @@ type dbRepoProvider interface {
 }
 type redisRepoProvider interface {
 	GetUserByID(ctx context.Context, ID string) (redis.User, error)
+	SetRedisUser(ctx context.Context, user redis.User) error
 }
 
 type Resource struct {
