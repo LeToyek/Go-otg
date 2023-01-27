@@ -21,6 +21,7 @@ func StartENV() error {
 	viper.SetConfigType("yaml")
 	viper.SetConfigName("app.config")
 	viper.AddConfigPath("../config")
+	viper.AddConfigPath("./config")
 
 	return viper.ReadInConfig()
 }
