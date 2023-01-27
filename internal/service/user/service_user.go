@@ -1,8 +1,6 @@
 package user
 
 import (
-	// golang package
-	// golang package
 	"context"
 	"go-otg/internal/entity"
 
@@ -22,7 +20,7 @@ func (service *Service) GetUserByID(ctx context.Context, ID string) (User, error
 
 	//example hashing from service
 
-	hashedPass, err := bcrypt.GenerateFromPassword([]byte(result.Password), 14)
+	hashedPass, err := bcrypt.GenerateFromPassword([]byte(result.Password), 6)
 	if err != nil {
 		return User{}, err
 	}
