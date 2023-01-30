@@ -1,0 +1,38 @@
+services:
+  redis:
+    container_name: 'gootg-rdb'
+    image: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - gootg-network
+  db:
+    image: 'postgres:latest'
+    container_name: 'db-gootg'
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    expose:
+      - 5432
+    ports:
+      - ${DB_OPEN_PORT}:5432
+    networks: 
+      - gootg-network
+    volumes:
+      - db_storage:/var/lib/postgresql/data
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    container_name: application
+    image: go-otg
+    networks:
+      - gootg-network
+networks:
+  gootg-network:
+volumes:
+  db_storage:
+    driver: local
+  server_storage:
+    driver: local
