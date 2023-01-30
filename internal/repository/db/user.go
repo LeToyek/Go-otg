@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"go-otg/internal/repository/db/constants"
 	"strconv"
 	"time"
 )
@@ -11,7 +12,7 @@ func (repository *Repository) GetUserByID(ctx context.Context, ID string) (User,
 	defer cancel()
 
 	var result User
-	err := repository.db.GetContext(ctxRepository, &result, "select * from users where id = $1", ID)
+	err := repository.db.GetContext(ctxRepository, &result, constants.GetUserById, ID)
 	if err != nil {
 		return User{}, err
 	}

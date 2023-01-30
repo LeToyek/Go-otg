@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 	"database/sql"
+	"go-otg/internal/repository/db/constants"
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
@@ -27,7 +28,7 @@ func TestRepository_GetUserByID(t *testing.T) {
 			args: "1",
 			err:  assert.AnError,
 			mock: func(mock mockFields) {
-				mock.sql.ExpectQuery("select * from users where id = $1").
+				mock.sql.ExpectQuery(constants.GetUserById).
 					WithArgs("1").
 					WillReturnError(assert.AnError)
 			},
@@ -45,7 +46,7 @@ func TestRepository_GetUserByID(t *testing.T) {
 				},
 			},
 			mock: func(mock mockFields) {
-				mock.sql.ExpectQuery("select * from users where id = $1").
+				mock.sql.ExpectQuery(constants.GetUserById).
 					WithArgs("1").
 					WillReturnRows(sqlmock.NewRows([]string{"id", "username", "email", "age"}).
 						AddRow("1", "username", "email", 20))
