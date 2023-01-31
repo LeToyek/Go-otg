@@ -2,14 +2,15 @@ package user
 
 import (
 	"context"
-	"go-otg/internal/repository/db"
+	"fmt"
 )
 
-func (resource *Resource) GetUserByIDFromDB(ctx context.Context, ID string) (db.User, error) {
+func (resource *Resource) GetUserByIDFromDB(ctx context.Context, ID string) (User, error) {
 	result, err := resource.db.GetUserByID(ctx, ID)
+	fmt.Print("WORK HEREEE" + result.Email)
 	if err != nil {
-		return db.User{}, err
+		return User{}, err
 	}
 
-	return db.User(result), nil
+	return User(result), nil
 }

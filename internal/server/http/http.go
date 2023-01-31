@@ -27,5 +27,5 @@ func NewHTTPServer(handlers *server.Handlers) *httpServer {
 func (server *httpServer) RegisterHandler(r *gin.Engine) {
 	r.GET("/health-check", server.handlers.Common.HandleGetCommonMessage)
 	r.GET("/test", func(ctx *gin.Context) { ctx.JSON(http.StatusAccepted, gin.H{"message": "aowkwoak"}) })
-	r.GET("/getUser", server.handlers.User.GetUserByID)
+	r.GET("/getUser/:id", server.handlers.User.GetUserByID)
 }

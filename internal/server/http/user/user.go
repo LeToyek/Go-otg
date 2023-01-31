@@ -7,7 +7,8 @@ import (
 )
 
 func (h *Handler) GetUserByID(c *gin.Context) {
-	res, err := h.user.GetUserDataByID(c.Request.Context(), "tyq1")
+	id := c.Param("id")
+	res, err := h.user.GetUserDataByID(c.Request.Context(), id)
 	if err != nil {
 		c.JSON(http.StatusExpectationFailed, map[string]interface{}{
 			"message": "failed",
@@ -15,6 +16,6 @@ func (h *Handler) GetUserByID(c *gin.Context) {
 		})
 		return
 	}
-	c.JSON(http.StatusAccepted, res)
+	c.JSON(http.StatusOK, res)
 
 }
