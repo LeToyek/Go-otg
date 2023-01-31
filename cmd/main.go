@@ -4,24 +4,16 @@ import (
 	"go-otg/internal/app/http"
 	"log"
 
-	"github.com/spf13/viper"
+	"github.com/joho/godotenv"
 )
 
 // main function
 func main() {
-	err := StartENV()
+	err := godotenv.Load("../.env")
 	if err != nil {
-		log.Fatal(err.Error())
+		log.Fatal("Error loading .env file")
 	}
 	if 1+1 == 2 {
 		http.NewApplication()
 	}
-}
-func StartENV() error {
-	viper.SetConfigType("yaml")
-	viper.SetConfigName("app.config")
-	viper.AddConfigPath("../config")
-	viper.AddConfigPath("./config")
-
-	return viper.ReadInConfig()
 }
