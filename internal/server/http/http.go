@@ -28,4 +28,5 @@ func (server *httpServer) RegisterHandler(r *gin.Engine) {
 	r.GET("/health-check", server.handlers.Common.HandleGetCommonMessage)
 	r.GET("/test", func(ctx *gin.Context) { ctx.JSON(http.StatusAccepted, gin.H{"message": "aowkwoak"}) })
 	r.GET("/getUser/:id", server.handlers.User.GetUserByID)
+	r.POST("/register", server.handlers.User.RegisterUser)
 }
