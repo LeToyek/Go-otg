@@ -146,9 +146,8 @@ func TestRepository_CreateUser(t *testing.T) {
 			db: sqlx.NewDb(mockDB, "pq"),
 		}
 
-		got, err := repository.CreateUser(context.Background(), test.args)
+		err = repository.CreateUser(context.Background(), test.args)
 
-		assert.Equal(t, test.want, got)
 		assert.Equal(t, test.errWant, err)
 	}
 }
