@@ -1,6 +1,7 @@
 package server
 
 import (
+	"go-otg/internal/infrastructure"
 	"go-otg/internal/service/common"
 	"go-otg/internal/service/user"
 )
@@ -14,9 +15,9 @@ type Services struct {
 //
 // It returns pointer of Services when successful.
 // Otherwise, nil pointer of Services will be returned.
-func NewServices(resources *Resources) *Services {
+func NewServices(infra *infrastructure.Infra, resources *Resources) *Services {
 	return &Services{
 		Common: common.NewService(resources.Common),
-		User:   user.NewService(resources.User),
+		User:   user.NewService(infra, resources.User),
 	}
 }
