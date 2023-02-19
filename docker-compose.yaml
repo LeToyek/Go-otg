@@ -1,6 +1,8 @@
 services:
   redis:
     container_name: 'gootg-rdb'
+    expose:
+      - 6379
     image: redis
     ports:
       - "6379:6379"
@@ -8,8 +10,9 @@ services:
       - gootg-network
   db:
     image: 'postgres:latest'
-    container_name: 'db-gootg'
+    container_name: 'db-gootg-postgres'
     environment:
+      - ENV=PRODUCTION
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USERNAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
@@ -29,6 +32,8 @@ services:
     image: go-otg
     networks:
       - gootg-network
+    env_file:
+      - .env
 networks:
   gootg-network:
 volumes:
