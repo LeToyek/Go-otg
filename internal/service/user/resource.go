@@ -8,6 +8,7 @@ import (
 
 type dbRepoProvider interface {
 	GetUserByID(ctx context.Context, ID string) (db.User, error)
+	CreateUser(ctx context.Context, user db.User) error
 }
 type redisRepoProvider interface {
 	GetUserByID(ctx context.Context, ID string) (redis.User, error)

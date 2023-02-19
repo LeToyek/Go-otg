@@ -7,6 +7,7 @@ import (
 
 type userServiceProvider interface {
 	GetUserByID(ctx context.Context, ID string) (user.User, error)
+	CreateUser(ctx context.Context, user user.User) error
 }
 
 type Usecase struct {
